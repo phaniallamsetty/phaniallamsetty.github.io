@@ -45,13 +45,13 @@ function engagementDisplayedCallback(data) {
 
 		if(window.dataLayer) {
 			window.dataLayer.push({
-				event: "engagement_shown",
-				source: window.location,
-				timestamp: engagementDisplayEnd,
-				timeElapsed: timeElapsed
+				lp_event: "engagement_displayed",
+				lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
+				lp_event_timestamp: new Date(),
+				lp_event_time_elapsed: timeElapsed
 			});
 
-            appendEventToLog('engagement_shown');
+            appendEventToLog('engagement_displayed');
 		}
 	}
 }
@@ -67,13 +67,13 @@ function messagingWindowInteractiveCallback(data) {
 	if(messagingWindowLoadStart && data && data.state && data.state == "chatting") {
 		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
 		window.dataLayer.push({
-			event: "messagin_window_interactive",
-			source: window.location,
-			timestamp: messagingWindowLoadEnd,
-			timeElapsed: timeElapsed
+			lp_event: "messaging_window_ready",
+			lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
+			lp_event_timestamp: new Date(),
+			lp_event_time_elapsed: timeElapsed
 		});
-        
-        appendEventToLog('messagin_window_interactive');
+
+		appendEventToLog('messaging_window_ready');
 	}
 }
 
