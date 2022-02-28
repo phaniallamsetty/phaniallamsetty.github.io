@@ -45,7 +45,7 @@ function engagementDisplayedCallback(data) {
 
 		if(window.dataLayer) {
 			window.dataLayer.push({
-				event: "engagement_displayed"
+				event: "engagement_displayed",
 				lp_event: "engagement_displayed",
 				lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
 				lp_event_timestamp: new Date(),
