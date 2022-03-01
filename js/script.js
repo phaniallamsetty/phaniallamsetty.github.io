@@ -85,3 +85,31 @@ function appendEventToLog(eventName) {
     elem.innerHTML += '<br>';
     elem.innerHTML += '<code>' + eventName + '</code>';
 }
+
+$('#lp_form').submit(function(e) {
+	e.preventDefault();
+    const site = $("#lp_account").val();
+    const username = $("#lp_username").val();
+
+    if(window.location.href.indexOf(username) > -1) {
+        window.history.replaceState(null, null, window.location.pathname);
+    }
+    if (username === "") {
+        window.location.href = updateQueryStringParameter(window.location.href, "site", site);
+
+    } else {
+        const href = updateQueryStringParameter(window.location.href, "site", site);
+        window.location.href = updateQueryStringParameter(href, "username", username);
+    }
+});
+
+function updateQueryStringParameter(uri, key, value) {
+    const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    const separator = uri.indexOf('?') !== -1 ? "&" : "?";
+
+    if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+        return uri + separator + key + "=" + value;
+    }
+}

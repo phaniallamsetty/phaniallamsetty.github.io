@@ -1,0 +1,13 @@
+.spacer {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+}
+
+.form-control-spacer {
+    margin: 20px;
+}
+
+.form-group {
+    text-align: left;
+}
