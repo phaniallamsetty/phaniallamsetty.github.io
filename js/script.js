@@ -80,28 +80,27 @@ function messagingWindowInteractiveCallback(data) {
 }
 
 function appendEventToLog(eventName) {
-    console.log('append event');
     var elem = document.getElementById('data-layer-log');
     elem.innerHTML += '<br>';
     elem.innerHTML += '<code>' + eventName + '</code>';
 }
 
-$('#lp_form').submit(function(e) {
-	e.preventDefault();
-    const site = $("#lp_account").val();
-    const username = $("#lp_username").val();
+function loginClick(event) {
+	event.preventDefault();
+	const siteId = document.getElementById('siteId').value;
+	const username = document.getElementById('username').value;
 
-    if(window.location.href.indexOf(username) > -1) {
-        window.history.replaceState(null, null, window.location.pathname);
-    }
-    if (username === "") {
-        window.location.href = updateQueryStringParameter(window.location.href, "site", site);
+	if(window.location.href.indexOf(username) > -1) {
+		window.history.replaceState(null, null, window.location.pathname);
+	}
 
-    } else {
-        const href = updateQueryStringParameter(window.location.href, "site", site);
-        window.location.href = updateQueryStringParameter(href, "username", username);
-    }
-});
+	if(username === '') {
+		window.location.href = updateQueryStringParameter(window.location.href, 'siteId', siteId);
+	} else {
+		const href = updateQueryStringParameter(window.location.href, 'siteId', siteId);
+		window.location.href = updateQueryStringParameter(href, "username", username);
+	}
+}
 
 function updateQueryStringParameter(uri, key, value) {
     const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
@@ -113,3 +112,26 @@ function updateQueryStringParameter(uri, key, value) {
         return uri + separator + key + "=" + value;
     }
 }
+
+window.addEventListener('DOMContentLoaded', function(evt) {
+	var qString = window.location.search;
+	var queryParams = {};
+	var queryArray = qString.substring(1).split('&');
+	
+	queryArray.forEach(function(x) {
+		if(x.indexOf('=') > 0) {
+			var qArray = x.split('=');
+			if(qArray.length == 2) {
+				queryParams[decodeURIComponent(qArray[0])] = decodeURIComponent(qArray[1]);
+			}
+		}
+	});
+
+	if(queryParams.siteId && queryParams.siteId.length > 0) {
+		document.getElementById('siteId').value = queryParams.siteId;
+
+		if(queryParams.username && queryParams.username.length > 0) {
+			document.getElementById('username').value = queryParams.username;
+		}
+	}
+})
