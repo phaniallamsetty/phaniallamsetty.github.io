@@ -39,23 +39,22 @@ function engagementDisplayInitiatedCallback(data) {
 function engagementDisplayedCallback(data) {
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
-	appendEventToLog('engagement_displayed');
 
-	// if(engagementDisplayStart) {
-	// 	timeElapsed = engagementDisplayEnd.getTime() - engagementDisplayStart.getTime();
+	if(engagementDisplayStart) {
+		timeElapsed = engagementDisplayEnd.getTime() - engagementDisplayStart.getTime();
 
-	// 	if(window.dataLayer) {
-	// 		window.dataLayer.push({
-	// 			event: "engagement_displayed",
-	// 			lp_event: "engagement_displayed",
-	// 			lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
-	// 			lp_event_timestamp: new Date(),
-	// 			lp_event_time_elapsed: timeElapsed
-	// 		});
+		if(window.dataLayer) {
+			window.dataLayer.push({
+				event: "engagement_displayed",
+				lp_event: "engagement_displayed",
+				lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
+				lp_event_timestamp: new Date(),
+				lp_event_time_elapsed: timeElapsed
+			});
 
-    //         appendEventToLog('engagement_displayed');
-	// 	}
-	// }
+            appendEventToLog('engagement_displayed');
+		}
+	}
 }
 
 function engagementClickCallback(data) {
@@ -65,26 +64,25 @@ function engagementClickCallback(data) {
 function messagingWindowInteractiveCallback(data) {
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
-	appendEventToLog(data.state);
 
-	// if(messagingWindowLoadStart && data && data.state && data.state == "chatting") {
-	// 	timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
-	// 	window.dataLayer.push({
-	// 		event: "messaging_window_ready",
-	// 		lp_event: "messaging_window_ready",
-	// 		lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
-	// 		lp_event_timestamp: new Date(),
-	// 		lp_event_time_elapsed: timeElapsed
-	// 	});
+	if(messagingWindowLoadStart && data && data.state && data.state == "init") {
+		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
+		window.dataLayer.push({
+			event: "messaging_window_ready",
+			lp_event: "messaging_window_ready",
+			lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
+			lp_event_timestamp: new Date(),
+			lp_event_time_elapsed: timeElapsed
+		});
 
-	// 	appendEventToLog('messaging_window_ready');
+		appendEventToLog('messaging_window_ready');
 
 		events.unbind({
 			eventName: "state",
 			appName: "lpUnifiedWindow",
 			func: unbindChatting
 		})
-	//}
+	}
 }
 
 function appendEventToLog(eventName) {
