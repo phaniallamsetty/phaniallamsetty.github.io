@@ -65,7 +65,7 @@ function engagementClickCallback(data) {
 function messagingWindowInteractiveCallback(data) {
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
-	appendEventToLog('messagin_window_ready');
+	appendEventToLog(data.state);
 
 	// if(messagingWindowLoadStart && data && data.state && data.state == "chatting") {
 	// 	timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
