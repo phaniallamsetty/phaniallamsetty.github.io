@@ -65,7 +65,7 @@ function messagingWindowInteractiveCallback(data) {
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
 
-	if(messagingWindowLoadStart && data && data.state && data.state == "initialised") {
+	if(messagingWindowLoadStart && data && data.state && data.state == "chatting") {
 		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
 		window.dataLayer.push({
 			event: "messaging_window_ready",
@@ -76,6 +76,12 @@ function messagingWindowInteractiveCallback(data) {
 		});
 
 		appendEventToLog('messaging_window_ready');
+
+		events.unbind({
+			eventName: "state",
+			appName: "lpUnifiedWindow",
+			func: unbindChatting
+		})
 	}
 }
 
@@ -135,3 +141,7 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 		}
 	}
 })
+
+function unbindChatting(data) {
+	console.log('data', data);
+}
