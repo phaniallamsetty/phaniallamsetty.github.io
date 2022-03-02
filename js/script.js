@@ -65,7 +65,7 @@ function messagingWindowInteractiveCallback(data) {
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
 
-	if(messagingWindowLoadStart && data && data.state && data.state == "chatting") {
+	if(messagingWindowLoadStart && data && data.state && data.state == "initialised") {
 		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
 		window.dataLayer.push({
 			event: "messaging_window_ready",
