@@ -79,12 +79,12 @@ function messagingWindowInteractiveCallback(data) {
 
 	// 	appendEventToLog('messaging_window_ready');
 
-	// 	events.unbind({
-	// 		eventName: "state",
-	// 		appName: "lpUnifiedWindow",
-	// 		func: unbindChatting
-	// 	})
-	// }
+		events.unbind({
+			eventName: "state",
+			appName: "lpUnifiedWindow",
+			func: unbindChatting
+		})
+	//}
 }
 
 function appendEventToLog(eventName) {
