@@ -3,7 +3,7 @@
 <head>
 	<title>WX Test Site</title>
 	<script>
-		var isNewUser = document.cookie && document.cookie.indexOf('LPVID') > -1;
+		var isNewUser = !(document.cookie && document.cookie.indexOf('LPVID') > -1);
 	</script>
 	<script>
 		var env = "PROD";
