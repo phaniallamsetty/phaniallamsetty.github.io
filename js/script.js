@@ -28,6 +28,10 @@ function bindToEvents() {
 
 function engagementDisplayedCallback(data) {
 	var isNewUser = window.isNewUser ? window.isNewUser : false;
+	var isNewUserVal = "No";
+	if(isNewUser) {
+		isNewUserVal = "Yes";
+	}
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
 
@@ -42,7 +46,7 @@ function engagementDisplayedCallback(data) {
 				lp_event_timestamp: new Date(),
 				lp_event_time_elapsed: timeElapsed,
 				lp_event_category: "performance",
-				lp_event_new_user: isNewUser
+				lp_event_new_user: isNewUserVal
 			});
 
             appendEventToLog('engagement_displayed');
@@ -56,6 +60,10 @@ function engagementClickCallback(data) {
 
 function messagingWindowInteractiveCallback(data) {
 	var isNewUser = window.isNewUser ? window.isNewUser : false;
+	var isNewUserVal = "No";
+	if(isNewUser) {
+		isNewUserVal = "Yes";
+	}
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
 
@@ -68,7 +76,7 @@ function messagingWindowInteractiveCallback(data) {
 			lp_event_timestamp: new Date(),
 			lp_event_time_elapsed: timeElapsed,
 			lp_event_category: "performance",
-			lp_event_new_user: isNewUser
+			lp_event_new_user: isNewUserVal
 		});
 
 		appendEventToLog('messaging_window_ready');
