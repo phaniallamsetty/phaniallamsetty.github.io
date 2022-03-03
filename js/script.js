@@ -8,12 +8,6 @@ bindToEvents();
 
 function bindToEvents() {
 	events.bind({
-		eventName: "START",
-		appName: "LP_OFFERS",
-		func: engagementDisplayInitiatedCallback
-	});
-
-	events.bind({
 		eventName: "OFFER_IMPRESSION",
 		appName: "LP_OFFERS",
 		func: engagementDisplayedCallback
@@ -32,17 +26,13 @@ function bindToEvents() {
 	});
 }
 
-function engagementDisplayInitiatedCallback(data) {
-	engagementDisplayStart = new Date();
-}
-
 function engagementDisplayedCallback(data) {
 	var isNewUser = window.isNewUser ? window.isNewUser : false;
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
 
 	if(engagementDisplayStart) {
-		timeElapsed = engagementDisplayEnd.getTime() - engagementDisplayStart.getTime();
+		timeElapsed = engagementDisplayEnd.getTime() - window.engagementDisplayStart.getTime();
 
 		if(window.dataLayer) {
 			window.dataLayer.push({
@@ -82,14 +72,6 @@ function messagingWindowInteractiveCallback(data) {
 		});
 
 		appendEventToLog('messaging_window_ready');
-
-		// events.unbind({
-		// 	eventName: "state",
-		// 	appName: "lpUnifiedWindow",
-		// 	func: unbindChatting
-		// })
-
-		//isNewUser();
 	}
 }
 
@@ -149,24 +131,3 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 		}
 	}
 })
-
-// function unbindChatting(data) {
-// 	console.log('data', data);
-// }
-
-// function isNewUser() {
-// 	console.log('cookie', document.cookie);
-
-// 	// var keys = Object.keys(window.localStorage);
-
-// 	// for(var i = 0; i < keys.length; i++) {
-// 	// 	console.log('localStorage', window.localStorage.getItem(keys[i]));
-// 	// }
-
-// 	// keys = [];
-// 	// keys = Object.keys(window.sessionStorage);
-
-// 	// for(var i = 0; i < keys.length; i++) {
-// 	// 	console.log('sessionStorage', window.sessionStorage.getItem(keys[i]));
-// 	// }
-// }
