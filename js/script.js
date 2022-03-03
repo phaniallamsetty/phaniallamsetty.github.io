@@ -50,7 +50,7 @@ function engagementDisplayedCallback(data) {
 				lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
 				lp_event_timestamp: new Date(),
 				lp_event_time_elapsed: timeElapsed,
-				lp_event_category: "performance"
+				lp_event_category: "performance",
 			});
 
             appendEventToLog('engagement_displayed');
@@ -79,11 +79,13 @@ function messagingWindowInteractiveCallback(data) {
 
 		appendEventToLog('messaging_window_ready');
 
-		events.unbind({
-			eventName: "state",
-			appName: "lpUnifiedWindow",
-			func: unbindChatting
-		})
+		// events.unbind({
+		// 	eventName: "state",
+		// 	appName: "lpUnifiedWindow",
+		// 	func: unbindChatting
+		// })
+
+		isNewUser();
 	}
 }
 
@@ -144,6 +146,23 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 	}
 })
 
-function unbindChatting(data) {
-	console.log('data', data);
+// function unbindChatting(data) {
+// 	console.log('data', data);
+// }
+
+function isNewUser() {
+	console.log('cookie', document.cookie);
+
+	var keys = Object.keys(window.localStorage);
+
+	for(var i = 0; i < keys.length; i++) {
+		console.log('localStorage', window.localStorage.getItem(keys[i]));
+	}
+
+	keys = [];
+	keys = Object.keys(window.sessionStorage);
+
+	for(var i = 0; i < keys.length; i++) {
+		console.log('sessionStorage', window.sessionStorage.getItem(keys[i]));
+	}
 }
