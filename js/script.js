@@ -49,7 +49,8 @@ function engagementDisplayedCallback(data) {
 				lp_event: "engagement_displayed",
 				lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
 				lp_event_timestamp: new Date(),
-				lp_event_time_elapsed: timeElapsed
+				lp_event_time_elapsed: timeElapsed,
+				lp_event_category: "performance"
 			});
 
             appendEventToLog('engagement_displayed');
@@ -72,7 +73,8 @@ function messagingWindowInteractiveCallback(data) {
 			lp_event: "messaging_window_ready",
 			lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
 			lp_event_timestamp: new Date(),
-			lp_event_time_elapsed: timeElapsed
+			lp_event_time_elapsed: timeElapsed,
+			lp_event_category: "performance"
 		});
 
 		appendEventToLog('messaging_window_ready');
