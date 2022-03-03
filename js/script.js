@@ -63,6 +63,7 @@ function engagementClickCallback(data) {
 }
 
 function messagingWindowInteractiveCallback(data) {
+	console.log('isNewUser', isNewUser);
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
 
