@@ -91,7 +91,6 @@ function appendEventToLog(eventName) {
 
 function loginClick(event) {
 	event.preventDefault();
-	window.engagementDisplayStart = new Date();
 	const siteId = document.getElementById('siteId').value;
 	const username = document.getElementById('username').value;
 
