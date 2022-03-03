@@ -52,7 +52,7 @@ function engagementDisplayedCallback(data) {
 				lp_event_timestamp: new Date(),
 				lp_event_time_elapsed: timeElapsed,
 				lp_event_category: "performance",
-				lp_event_isNewUser: isNewUser
+				lp_event_new_user: isNewUser
 			});
 
             appendEventToLog('engagement_displayed');
@@ -78,7 +78,7 @@ function messagingWindowInteractiveCallback(data) {
 			lp_event_timestamp: new Date(),
 			lp_event_time_elapsed: timeElapsed,
 			lp_event_category: "performance",
-			lp_event_isNewUser: isNewUser
+			lp_event_new_user: isNewUser
 		});
 
 		appendEventToLog('messaging_window_ready');
