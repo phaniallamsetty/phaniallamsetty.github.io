@@ -37,6 +37,7 @@ function engagementDisplayInitiatedCallback(data) {
 }
 
 function engagementDisplayedCallback(data) {
+	var isNewUser = window.isNewUser ? window.isNewUser : false;
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
 
@@ -51,6 +52,7 @@ function engagementDisplayedCallback(data) {
 				lp_event_timestamp: new Date(),
 				lp_event_time_elapsed: timeElapsed,
 				lp_event_category: "performance",
+				lp_event_isNewUser: isNewUser
 			});
 
             appendEventToLog('engagement_displayed');
@@ -63,7 +65,7 @@ function engagementClickCallback(data) {
 }
 
 function messagingWindowInteractiveCallback(data) {
-	console.log('isNewUser', isNewUser);
+	var isNewUser = window.isNewUser ? window.isNewUser : false;
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
 
@@ -75,7 +77,8 @@ function messagingWindowInteractiveCallback(data) {
 			lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
 			lp_event_timestamp: new Date(),
 			lp_event_time_elapsed: timeElapsed,
-			lp_event_category: "performance"
+			lp_event_category: "performance",
+			lp_event_isNewUser: isNewUser
 		});
 
 		appendEventToLog('messaging_window_ready');
