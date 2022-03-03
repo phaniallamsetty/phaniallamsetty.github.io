@@ -85,7 +85,7 @@ function messagingWindowInteractiveCallback(data) {
 		// 	func: unbindChatting
 		// })
 
-		isNewUser();
+		//isNewUser();
 	}
 }
 
@@ -150,19 +150,19 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 // 	console.log('data', data);
 // }
 
-function isNewUser() {
-	console.log('cookie', document.cookie);
+// function isNewUser() {
+// 	console.log('cookie', document.cookie);
 
-	var keys = Object.keys(window.localStorage);
+// 	// var keys = Object.keys(window.localStorage);
 
-	for(var i = 0; i < keys.length; i++) {
-		console.log('localStorage', window.localStorage.getItem(keys[i]));
-	}
+// 	// for(var i = 0; i < keys.length; i++) {
+// 	// 	console.log('localStorage', window.localStorage.getItem(keys[i]));
+// 	// }
 
-	keys = [];
-	keys = Object.keys(window.sessionStorage);
+// 	// keys = [];
+// 	// keys = Object.keys(window.sessionStorage);
 
-	for(var i = 0; i < keys.length; i++) {
-		console.log('sessionStorage', window.sessionStorage.getItem(keys[i]));
-	}
-}
+// 	// for(var i = 0; i < keys.length; i++) {
+// 	// 	console.log('sessionStorage', window.sessionStorage.getItem(keys[i]));
+// 	// }
+// }
