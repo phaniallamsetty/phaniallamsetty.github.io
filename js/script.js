@@ -3,6 +3,8 @@ var engagementDisplayStart;
 var engagementDisplayEnd;
 var messagingWindowLoadStart;
 var messagingWindowLoadEnd;
+var customDimensions;
+var siteId;
 
 bindToEvents();
 
@@ -26,11 +28,9 @@ function bindToEvents() {
 	});
 }
 
-function engagementDisplayedCallback(data) {
-	var isNewUser = window.isNewUser ? window.isNewUser : false;
-	var isNewUserVal = "No";
-	if(isNewUser) {
-		isNewUserVal = "Yes";
+function engagementDisplayedCallback() {
+	if(!customDimensions) {
+		setCustomDimensions();
 	}
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
@@ -46,7 +46,9 @@ function engagementDisplayedCallback(data) {
 				lp_event_timestamp: new Date(),
 				lp_event_time_elapsed: timeElapsed,
 				lp_event_category: "performance",
-				lp_event_new_user: isNewUserVal
+				lp_event_new_user: customDimensions.isNewUserValue,
+				lp_event_visitor_id: customDimensions.lpVisitorId,
+				lp_event_session_id: customDimensions.lpSessionid
 			});
 
             appendEventToLog('engagement_displayed');
@@ -54,15 +56,13 @@ function engagementDisplayedCallback(data) {
 	}
 }
 
-function engagementClickCallback(data) {
+function engagementClickCallback() {
 	messagingWindowLoadStart = new Date();
 }
 
 function messagingWindowInteractiveCallback(data) {
-	var isNewUser = window.isNewUser ? window.isNewUser : false;
-	var isNewUserVal = "No";
-	if(isNewUser) {
-		isNewUserVal = "Yes";
+	if(!customDimensions) {
+		setCustomDimensions();
 	}
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
@@ -76,7 +76,9 @@ function messagingWindowInteractiveCallback(data) {
 			lp_event_timestamp: new Date(),
 			lp_event_time_elapsed: timeElapsed,
 			lp_event_category: "performance",
-			lp_event_new_user: isNewUserVal
+			lp_event_new_user: customDimensions.isNewUserValue,
+			lp_event_visitor_id: customDimensions.lpVisitorId,
+			lp_event_session_id: customDimensions.lpSessionid
 		});
 
 		appendEventToLog('messaging_window_ready');
@@ -91,7 +93,7 @@ function appendEventToLog(eventName) {
 
 function loginClick(event) {
 	event.preventDefault();
-	const siteId = document.getElementById('siteId').value;
+	siteId = document.getElementById('siteId').value;
 	const username = document.getElementById('username').value;
 
 	if(window.location.href.indexOf(username) > -1) {
@@ -138,4 +140,31 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 			document.getElementById('username').value = queryParams.username;
 		}
 	}
-})
+});
+
+function setCustomDimensions() {
+	var cookieArray = document.cookie ? document.cookie.split(';') : [];
+	var lpSessionId = 'LPSID-' + siteId;
+
+	if(window.isNewUser) {
+		customDimensions.isNewUserValue = 'Yes';
+	} else {
+		customDimensions.isNewUserValue = 'No';
+	}
+
+	cookieArray.forEach(function(x) {
+		x = x.trim();
+		var key = x.substring(0, x.indexOf('='));
+		var value = x.substring(x.indexOf('=') + 1);
+
+		if(key === lpSessionId) {
+			customDimensions.lpSessionId = value;
+		} else if(key === 'LPVID') {
+			customDimensions.lpVisitorId = value;
+		}
+
+		if(customDimensions && customDimensions.lpSessionId && customDimensions.lpVisitorId) {
+			break;
+		}
+	});
+}
