@@ -3,14 +3,8 @@ var engagementDisplayStart;
 var engagementDisplayEnd;
 var messagingWindowLoadStart;
 var messagingWindowLoadEnd;
-var customDimensions = {};
 
-init();
-
-function init() {
-	bindToEvents();
-	setCustomDimensions();
-}
+bindToEvents();
 
 function bindToEvents() {
 	events.bind({
@@ -93,24 +87,6 @@ function appendEventToLog(eventName) {
     var elem = document.getElementById('data-layer-log');
     elem.innerHTML += '<br>';
     elem.innerHTML += '<code>' + eventName + '</code>';
-}
-
-function setCustomDimensions() {
-	var cookieArray = [];
-
-	if(document.cookie && document.cookie.length > 0) {
-		cookieArray = document.cookie.split(';');
-
-		cookieArray.forEach(function(x) {
-			console.log('x', x);
-		})
-	}
-
-	// customDimensions = {
-	// 	isNewUser: getIsNewUserVal(),
-	// 	lpVisitorId: getVisitorId(),
-	// 	lpSessionId: getLpSessionId()
-	// }
 }
 
 function loginClick(event) {
