@@ -104,7 +104,7 @@ function pushToGtm(eventName) {
 	}
 
 	if(window.dataLayer) {
-		console.log('pushed object', {
+		window.dataLayer.push({
 			event: eventName,
 			lp_event: eventName,
 			lp_event_description: eventDescription,
