@@ -36,21 +36,22 @@ function engagementDisplayedCallback(data) {
 	var timeElapsed = 0;
 
 	if(engagementDisplayStart) {
-		timeElapsed = engagementDisplayEnd.getTime() - window.engagementDisplayStart.getTime();
+		// timeElapsed = engagementDisplayEnd.getTime() - window.engagementDisplayStart.getTime();
 
-		if(window.dataLayer) {
-			window.dataLayer.push({
-				event: "engagement_displayed",
-				lp_event: "engagement_displayed",
-				lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
-				lp_event_timestamp: new Date(),
-				lp_event_time_elapsed: timeElapsed,
-				lp_event_category: "performance",
-				lp_event_new_user: isNewUserVal
-			});
+		// if(window.dataLayer) {
+		// 	window.dataLayer.push({
+		// 		event: "engagement_displayed",
+		// 		lp_event: "engagement_displayed",
+		// 		lp_event_description: "Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.",
+		// 		lp_event_timestamp: new Date(),
+		// 		lp_event_time_elapsed: timeElapsed,
+		// 		lp_event_category: "performance",
+		// 		lp_event_new_user: isNewUserVal
+		// 	});
 
-            appendEventToLog('engagement_displayed');
-		}
+        //     appendEventToLog('engagement_displayed');
+		// }
+		pushToGtm('engagement_displayed');
 	}
 }
 
@@ -68,18 +69,54 @@ function messagingWindowInteractiveCallback(data) {
 	var timeElapsed = 0;
 
 	if(messagingWindowLoadStart && data && data.state && data.state == "init") {
+		// timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
+		// window.dataLayer.push({
+		// 	event: "messaging_window_ready",
+		// 	lp_event: "messaging_window_ready",
+		// 	lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
+		// 	lp_event_timestamp: new Date(),
+		// 	lp_event_time_elapsed: timeElapsed,
+		// 	lp_event_category: "performance",
+		// 	lp_event_new_user: isNewUserVal
+		// });
+
+		// appendEventToLog('messaging_window_ready');
+		pushToGtm('messaging_window_ready');
+	}
+}
+
+function pushToGtm(eventName) {
+	var eventDescription = '';
+	var timeElapsed = 0;
+
+	var isNewUser = window.isNewUser ? window.isNewUser : false;
+	var isNewUserVal = "No";
+	if(isNewUser) {
+		isNewUserVal = "Yes";
+	}
+
+	if(eventName === 'engagement_displayed') {
+		eventDescription = 'Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.';
+		timeElapsed = engagementDisplayEnd.getTime() - window.engagementDisplayStart.getTime();
+	} else if(eventName === 'messaging_window_ready') {
+		eventDescription = 'Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.';
 		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
-		window.dataLayer.push({
-			event: "messaging_window_ready",
-			lp_event: "messaging_window_ready",
-			lp_event_description: "Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.",
+	}
+
+	if(window.dataLayer) {
+		console.log('pushed object', {
+			event: eventName,
+			lp_event: eventName,
+			lp_event_description: eventDescription,
 			lp_event_timestamp: new Date(),
 			lp_event_time_elapsed: timeElapsed,
-			lp_event_category: "performance",
+			lp_event_category: 'performance',
 			lp_event_new_user: isNewUserVal
 		});
 
-		appendEventToLog('messaging_window_ready');
+		appendEventToLog(eventName);
+	} else {
+		appendEventToLog('window.datalayer not defined');
 	}
 }
 
@@ -133,7 +170,7 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 
 	if(queryParams.siteId && queryParams.siteId.length > 0) {
 		document.getElementById('siteId').value = queryParams.siteId;
-		
+
 		if(queryParams.username && queryParams.username.length > 0) {
 			document.getElementById('username').value = queryParams.username;
 		}
