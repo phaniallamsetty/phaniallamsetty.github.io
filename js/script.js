@@ -151,11 +151,11 @@ function setCustomDimensions() {
 	} else {
 		customDimensions.isNewUserValue = 'No';
 	}
-
-	cookieArray.forEach(function(x) {
-		x = x.trim();
-		var key = x.substring(0, x.indexOf('='));
-		var value = x.substring(x.indexOf('=') + 1);
+	
+	for(var i = 0; i < cookieArray.length; i++) {
+		cookieArray[i] = cookieArray[i].trim();
+		var key = cookieArray[i].substring(0, cookieArray[i].indexOf('='));
+		var value = cookieArray[i].substring(cookieArray[i].indexOf('=') + 1);
 
 		if(key === lpSessionId) {
 			customDimensions.lpSessionId = value;
@@ -166,5 +166,5 @@ function setCustomDimensions() {
 		if(customDimensions && customDimensions.lpSessionId && customDimensions.lpVisitorId) {
 			break;
 		}
-	});
+	}
 }
