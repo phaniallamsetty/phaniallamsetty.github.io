@@ -27,11 +27,6 @@ function bindToEvents() {
 }
 
 function engagementDisplayedCallback(data) {
-	var isNewUser = window.isNewUser ? window.isNewUser : false;
-	var isNewUserVal = "No";
-	if(isNewUser) {
-		isNewUserVal = "Yes";
-	}
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
 
@@ -45,11 +40,6 @@ function engagementClickCallback(data) {
 }
 
 function messagingWindowInteractiveCallback(data) {
-	var isNewUser = window.isNewUser ? window.isNewUser : false;
-	var isNewUserVal = "No";
-	if(isNewUser) {
-		isNewUserVal = "Yes";
-	}
 	messagingWindowLoadEnd = new Date();
 	var timeElapsed = 0;
 
