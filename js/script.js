@@ -155,6 +155,7 @@ window.addEventListener('DOMContentLoaded', function(evt) {
 
 	if(queryParams.siteId && queryParams.siteId.length > 0) {
 		document.getElementById('siteId').value = queryParams.siteId;
+		siteId = queryParams.siteId;
 
 		if(queryParams.username && queryParams.username.length > 0) {
 			document.getElementById('username').value = queryParams.username;
