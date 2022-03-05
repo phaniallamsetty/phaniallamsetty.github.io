@@ -3,6 +3,7 @@ var engagementDisplayStart;
 var engagementDisplayEnd;
 var messagingWindowLoadStart;
 var messagingWindowLoadEnd;
+var siteId;
 
 bindToEvents();
 
@@ -51,6 +52,11 @@ function messagingWindowInteractiveCallback(data) {
 function pushToGtm(eventName) {
 	var eventDescription = '';
 	var timeElapsed = 0;
+	var key;
+	var value;
+	var cookieItem;
+	var lpVisitorId = '';
+	var sessionCookieId = 'LPSID-' + siteId;
 
 	var isNewUser = window.isNewUser ? window.isNewUser : false;
 	var isNewUserVal = "No";
@@ -66,6 +72,20 @@ function pushToGtm(eventName) {
 		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
 	}
 
+	var cookieArray = document.cookie ? document.cookie.split(';') : [];
+
+	for(var i = 0; i < cookieArray.length; i++) {
+		cookieItem = cookieArray[i];
+		key = cookieItem.substring(0, cookieItem.indexOf('='));
+		value = cookieItem.substring(cookieItem.indexOf('=') + 1);
+
+		if(key === 'LPVID') {
+			lpVisitorId = value;
+		} else if(key === sessionCookieId) {
+			lpSessionId = value;
+		}
+	}
+
 	if(window.dataLayer) {
 		window.dataLayer.push({
 			event: eventName,
@@ -74,7 +94,9 @@ function pushToGtm(eventName) {
 			lp_event_timestamp: new Date(),
 			lp_event_time_elapsed: timeElapsed,
 			lp_event_category: 'performance',
-			lp_event_new_user: isNewUserVal
+			lp_event_new_user: isNewUserVal,
+			lp_event_visitor_id: lpVisitorId,
+			lp_event_session_id: lpSessionId
 		});
 
 		appendEventToLog(eventName);
@@ -91,7 +113,7 @@ function appendEventToLog(eventName) {
 
 function loginClick(event) {
 	event.preventDefault();
-	const siteId = document.getElementById('siteId').value;
+	siteId = document.getElementById('siteId').value;
 	const username = document.getElementById('username').value;    
   
 	if(window.location.href.indexOf(username) > -1) {
