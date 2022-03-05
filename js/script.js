@@ -75,7 +75,7 @@ function pushToGtm(eventName) {
 	var cookieArray = document.cookie ? document.cookie.split(';') : [];
 
 	for(var i = 0; i < cookieArray.length; i++) {
-		cookieItem = cookieArray[i];
+		cookieItem = cookieArray[i].trim();
 		key = cookieItem.substring(0, cookieItem.indexOf('='));
 		value = cookieItem.substring(cookieItem.indexOf('=') + 1);
 
