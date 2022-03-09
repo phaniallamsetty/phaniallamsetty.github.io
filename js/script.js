@@ -28,16 +28,16 @@ function bindToEvents() {
 }
 
 function engagementDisplayedCallback(data) {
-	events.unbind({
-		eventName: "OFFER_IMPRESSION",
-		appName: "LP_OFFERS"
-	});
 	engagementDisplayEnd = new Date();
 	var timeElapsed = 0;
 
 	if(engagementDisplayStart) {
 		pushToGtm('engagement_displayed');
 	}
+	events.unbind({
+		eventName: "OFFER_IMPRESSION",
+		appName: "LP_OFFERS"
+	});
 }
 
 function engagementClickCallback(data) {
