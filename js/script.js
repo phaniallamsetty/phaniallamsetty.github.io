@@ -87,7 +87,7 @@ function pushToGtm(eventName) {
 	}
 
 	if(window.dataLayer) {
-		window.dataLayer.push({
+		let eventData = {
 			event: eventName,
 			lp_event: eventName,
 			lp_event_description: eventDescription,
@@ -97,18 +97,21 @@ function pushToGtm(eventName) {
 			lp_event_new_user: isNewUserVal,
 			lp_event_visitor_id: lpVisitorId,
 			lp_event_session_id: lpSessionId
-		});
+		};
 
-		appendEventToLog(eventName);
+		window.dataLayer.push(eventData);
+
+		appendEventToLog(eventName, eventData);
 	} else {
 		appendEventToLog('window.datalayer not defined');
 	}
 }
 
-function appendEventToLog(eventName) {
+function appendEventToLog(eventName, eventData) {
     var elem = document.getElementById('data-layer-log');
     elem.innerHTML += '<br>';
-    elem.innerHTML += '<code>' + eventName + '</code>';
+    elem.innerHTML += '<code><b>' + eventName + (eventData && eventData.lp_event_time_elapsed ? ' (' + eventData.lp_event_time_elapsed + 'ms)' : '') + '</b>' + (eventData && eventData !== {} ? ':<br />' + syntaxHighlight(JSON.stringify(eventData, null, 4)) : '') + '</code>';
+	elem.innerHTML += '<br>';
 }
 
 function loginClick(event) {
@@ -137,6 +140,25 @@ function updateQueryStringParameter(uri, key, value) {
     } else {
         return uri + separator + key + "=" + value;
     }
+}
+
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
 }
 
 window.addEventListener('DOMContentLoaded', function(evt) {
