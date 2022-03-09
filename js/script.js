@@ -4,6 +4,7 @@ var engagementDisplayEnd;
 var messagingWindowLoadStart;
 var messagingWindowLoadEnd;
 var siteId;
+var firstLoadCompleted = false;
 
 bindToEvents();
 
@@ -28,16 +29,15 @@ function bindToEvents() {
 }
 
 function engagementDisplayedCallback(data) {
-	engagementDisplayEnd = new Date();
-	var timeElapsed = 0;
+	if(!firstLoadCompleted) {
+		engagementDisplayEnd = new Date();
+		var timeElapsed = 0;
 
-	if(engagementDisplayStart) {
-		pushToGtm('engagement_displayed');
+		if(engagementDisplayStart) {
+			pushToGtm('engagement_displayed');
+		}
+		firstLoadCompleted = true;
 	}
-	events.unbind({
-		eventName: "OFFER_IMPRESSION",
-		appName: "LP_OFFERS"
-	});
 }
 
 function engagementClickCallback(data) {
