@@ -34,7 +34,7 @@ function engagementDisplayedCallback(data) {
 		engagementDisplayEnd = new Date();
 
 		if(engagementDisplayStart) {
-			//pushToGtm('engagement_displayed');
+			pushToGtm('engagement_displayed');
 		}
 		engagementDisplayedAlready = true;
 	}
@@ -49,7 +49,7 @@ function messagingWindowInteractiveCallback(data) {
 		messagingWindowLoadEnd = new Date();
 
 		if(messagingWindowLoadStart && data && data.state && data.state == "init") {
-			//pushToGtm('messaging_window_ready');
+			pushToGtm('messaging_window_ready');
 		}
 		windowOpenedAlready = true;
 	}
@@ -105,7 +105,7 @@ function pushToGtm(eventName) {
 			lp_event_session_id: lpSessionId
 		};
 
-		window.dataLayer.push(eventData);
+		//window.dataLayer.push(eventData);
 
 		appendEventToLog(eventName, eventData);
 	} else {
