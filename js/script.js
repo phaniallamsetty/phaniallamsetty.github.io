@@ -105,7 +105,7 @@ function pushToGtm(eventName) {
 			lp_event_session_id: lpSessionId
 		};
 
-		//window.dataLayer.push(eventData);
+		window.dataLayer.push(eventData);
 
 		appendEventToLog(eventName, eventData);
 	} else {
