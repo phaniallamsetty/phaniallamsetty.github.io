@@ -4,7 +4,8 @@ var engagementDisplayEnd;
 var messagingWindowLoadStart;
 var messagingWindowLoadEnd;
 var siteId;
-var firstLoadCompleted = false;
+var engagementDisplayedAlready = false;
+var windowOpenedAlready = false;
 
 bindToEvents();
 
@@ -29,14 +30,13 @@ function bindToEvents() {
 }
 
 function engagementDisplayedCallback(data) {
-	if(!firstLoadCompleted) {
+	if(!engagementDisplayedAlready) {
 		engagementDisplayEnd = new Date();
-		var timeElapsed = 0;
 
 		if(engagementDisplayStart) {
-			pushToGtm('engagement_displayed');
+			//pushToGtm('engagement_displayed');
 		}
-		firstLoadCompleted = true;
+		engagementDisplayedAlready = true;
 	}
 }
 
@@ -45,11 +45,13 @@ function engagementClickCallback(data) {
 }
 
 function messagingWindowInteractiveCallback(data) {
-	messagingWindowLoadEnd = new Date();
-	var timeElapsed = 0;
+	if(!windowOpenedAlready) {
+		messagingWindowLoadEnd = new Date();
 
-	if(messagingWindowLoadStart && data && data.state && data.state == "init") {
-		pushToGtm('messaging_window_ready');
+		if(messagingWindowLoadStart && data && data.state && data.state == "init") {
+			//pushToGtm('messaging_window_ready');
+		}
+		windowOpenedAlready = true;
 	}
 }
 
