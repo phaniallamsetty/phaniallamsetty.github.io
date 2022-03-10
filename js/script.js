@@ -112,7 +112,7 @@ function pushToGA(eventName) {
 		};
 
 		//window.dataLayer.push(eventData);
-		//gtag('event', eventName, eventData);
+		gtag('event', eventName, eventData);
 
 		appendEventToLog(eventName, eventData);
 	} else {
