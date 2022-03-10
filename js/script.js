@@ -34,7 +34,6 @@ function engagementDisplayedCallback(data) {
 		engagementDisplayEnd = new Date();
 
 		if(engagementDisplayStart) {
-			//pushToGtm('engagement_displayed');
 			pushToGA('engagement_displayed');
 		}
 		engagementDisplayedAlready = true;
@@ -50,7 +49,6 @@ function messagingWindowInteractiveCallback(data) {
 		messagingWindowLoadEnd = new Date();
 
 		if(messagingWindowLoadStart && data && data.state && data.state == "init") {
-			//pushToGtm('messaging_window_ready');
 			pushToGA('messaging_window_ready');
 		}
 		windowOpenedAlready = true;
@@ -95,17 +93,6 @@ function pushToGA(eventName) {
 	}
 
 	if(gtag) {
-		// let eventData = {
-		// 	event: eventName,
-		// 	lp_event: eventName,
-		// 	lp_event_description: eventDescription,
-		// 	lp_event_timestamp: new Date(),
-		// 	lp_event_time_elapsed: timeElapsed,
-		// 	lp_event_category: 'performance',
-		// 	lp_event_new_user: isNewUserVal,
-		// 	lp_event_visitor_id: lpVisitorId,
-		// 	lp_event_session_id: lpSessionId
-		// };
 		let eventData = {
 			'event_category': 'performance',
 			'value': timeElapsed,
@@ -114,7 +101,6 @@ function pushToGA(eventName) {
 			'lp_event_session_id': lpSessionId
 		};
 
-		//window.dataLayer.push(eventData);
 		gtag('event', eventName, eventData);
 
 		appendEventToLog(eventName, eventData);
