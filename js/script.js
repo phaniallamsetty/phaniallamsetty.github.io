@@ -34,7 +34,7 @@ function engagementDisplayedCallback(data) {
 		engagementDisplayEnd = new Date();
 
 		if(engagementDisplayStart) {
-			pushToGtm('engagement_displayed');
+			pushToGA('engagement_displayed');
 		}
 		engagementDisplayedAlready = true;
 	}
@@ -49,9 +49,63 @@ function messagingWindowInteractiveCallback(data) {
 		messagingWindowLoadEnd = new Date();
 
 		if(messagingWindowLoadStart && data && data.state && data.state == "init") {
-			pushToGtm('messaging_window_ready');
+			pushToGA('messaging_window_ready');
 		}
 		windowOpenedAlready = true;
+	}
+}
+
+function pushToGA(eventName) {
+	var eventDescription = '';
+	var timeElapsed = 0;
+	var key;
+	var value;
+	var cookieItem;
+	var lpVisitorId = '';
+	var sessionCookieId = 'LPSID-' + siteId;
+
+	var isNewUser = window.isNewUser ? window.isNewUser : false;
+	var isNewUserVal = "No";
+	if(isNewUser) {
+		isNewUserVal = "Yes";
+	}
+
+	if(eventName === 'engagement_displayed') {
+		eventDescription = 'Event recording the time from when the page was loaded to the time when the engagement icon is visible to the user.';
+		timeElapsed = engagementDisplayEnd.getTime() - window.engagementDisplayStart.getTime();
+	} else if(eventName === 'messaging_window_ready') {
+		eventDescription = 'Event recording the time from when the engagement icon is clicked to when the messaging window is ready to use.';
+		timeElapsed = messagingWindowLoadEnd.getTime() - messagingWindowLoadStart.getTime();
+	}
+
+	var cookieArray = document.cookie ? document.cookie.split(';') : [];
+
+	for(var i = 0; i < cookieArray.length; i++) {
+		cookieItem = cookieArray[i].trim();
+		key = cookieItem.substring(0, cookieItem.indexOf('='));
+		value = cookieItem.substring(cookieItem.indexOf('=') + 1);
+
+		if(key === 'LPVID') {
+			lpVisitorId = value;
+		} else if(key === sessionCookieId) {
+			lpSessionId = value;
+		}
+	}
+
+	if(gtag) {
+		let eventData = {
+			'event_category': 'performance',
+			'value': timeElapsed,
+			'lp_event_new_user': isNewUserVal,
+			'lp_event_visitor_id': lpVisitorId,
+			'lp_event_session_id': lpSessionId
+		};
+
+		gtag('event', eventName, eventData);
+
+		appendEventToLog(eventName, eventData);
+	} else {
+		appendEventToLog('gtag not defined');
 	}
 }
 
