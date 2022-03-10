@@ -108,7 +108,10 @@ function pushToGA(eventName) {
 		// };
 		let eventData = {
 			'event_category': 'performance',
-			'value': timeElapsed
+			'value': timeElapsed,
+			'lp_event_new_user': isNewUserVal,
+			'lp_event_visitor_id': lpVisitorId,
+			'lp_event_session_id': lpSessionId
 		};
 
 		//window.dataLayer.push(eventData);

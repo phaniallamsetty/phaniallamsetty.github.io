@@ -49,7 +49,14 @@
 	function gtag(){window.dataLayer.push(arguments);}
 	gtag('js', new Date());
 
-	gtag('config', 'UA-221193422-5', { 'send_page_view': false });
+	gtag('config', 'UA-221193422-5', { 
+		'send_page_view': false,
+		'custom_map': {
+			'dimension1': 'lp_event_new_user',
+			'dimension2': 'lp_event_visitor_id',
+			'dimension3': 'lp_event_session_id'
+		}
+	});
 	</script>
 
 	<!-- JavaScript Bundle with Popper -->
