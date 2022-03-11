@@ -48,7 +48,7 @@ function messagingWindowInteractiveCallback(data) {
 	if(!windowOpenedAlready) {
 		messagingWindowLoadEnd = new Date();
 
-		if(messagingWindowLoadStart && data && data.state && data.state == "init") {
+		if(messagingWindowLoadStart && data && data.state && data.state == "waiting") {
 			windowOpenedAlready = true;
 			pushToGA('messaging_window_ready');
 		}
