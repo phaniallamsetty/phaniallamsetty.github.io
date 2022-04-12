@@ -8,6 +8,7 @@ var engagementDisplayedAlready = false;
 var windowOpenedAlready = false;
 
 bindToEvents();
+bindToGAProperty();
 
 function bindToEvents() {
 	events.bind({
@@ -27,6 +28,16 @@ function bindToEvents() {
 		appName: "lpUnifiedWindow",
 		func: messagingWindowInteractiveCallback
 	});
+}
+
+function bindToGAProperty() {
+	console.group('query params');
+	console.log('site', site);
+	console.log('username', username);
+	console.log('env', env);
+	console.log('version', version);
+	console.log('googleAnalyticsTrackingId', googleAnalyticsTrackingId);
+	console.groupEnd();
 }
 
 function engagementDisplayedCallback(data) {
