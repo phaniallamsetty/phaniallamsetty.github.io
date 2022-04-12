@@ -9,13 +9,28 @@
 	<script>
 		var envMap = {
 			qa : {
+				name: 'qa',
 				tagDomain: 'lptag-dev.dev.lprnd.net',
+				gaSettings: {
+					perfTestGaProperty: 'UA-221193422-11',
+					nonPerfTestGaProperty: 'UA-221193422-5'
+				}
 			},
 			alpha : {
+				name: 'alpha',
 				tagDomain : 'lptag-a.liveperson.net',
+				gaSettings: {
+					perfTestGaProperty: 'UA-221193422-12',
+					nonPerfTestGaProperty: 'UA-221193422-10'
+				}
 			},
 			prod : {
+				name: 'production',
 				tagDomain : 'lptag.liveperson.net',
+				gaSettings: {
+					perfTestGaProperty: 'UA-221193422-14',
+					nonPerfTestGaProperty: 'UA-221193422-13'
+				}
 			}
 		};
 
@@ -34,11 +49,28 @@
 			return queryParams;
 		}
 
+		function getGoogleAnalyticsTrackingId(environment, minorVersion) {
+			var envDetails = envMap[environment];
+			var property = 'UA-221193422-5';
+			if(envDetails) {
+				if(!isNaN(minorVersion)) {
+					switch(minorVersion) {
+						case 17: property = envDetails.gaSettings.perfTestGaProperty;
+							break;
+						default: property = envDetails.gaSettings.nonPerfTestGaProperty;
+							break;
+					}
+				}
+			}
+
+			return property;
+		}
+
 		var site = getURLParams(window.location.search).siteId || "";
 		var username = getURLParams(window.location.search).username || "";
 		var env = getURLParams(window.location.search).env || "qa";
-		var version = getURLParams(window.location.search).version || "10.16";
-		var googleAnalyticsTrackingId = getURLParams(window.location.search).googleAnalyticsTrackingId || "UA-221193422-5";
+		var minVersion = getURLParams(window.location.search).version || "16";
+		var googleAnalyticsTrackingId = getGoogleAnalyticsTrackingId(env, minVersion);
 	</script>
 	<script>
 

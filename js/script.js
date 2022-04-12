@@ -109,7 +109,8 @@ function pushToGA(eventName) {
 			'value': timeElapsed,
 			'lp_event_new_user': isNewUserVal,
 			'lp_event_visitor_id': lpVisitorId,
-			'lp_event_session_id': lpSessionId
+			'lp_event_session_id': lpSessionId,
+			'googleAnalyticsTrackingId': googleAnalyticsTrackingId
 		};
 
 		//gtag('event', eventName, eventData);
