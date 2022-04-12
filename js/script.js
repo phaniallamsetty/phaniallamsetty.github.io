@@ -35,7 +35,7 @@ function bindToGAProperty() {
 	console.log('site', site);
 	console.log('username', username);
 	console.log('env', env);
-	console.log('version', version);
+	console.log('minVersion', minVersion);
 	console.log('googleAnalyticsTrackingId', googleAnalyticsTrackingId);
 	console.groupEnd();
 }
