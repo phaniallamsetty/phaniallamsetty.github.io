@@ -101,7 +101,7 @@ function pushToGA(eventName) {
 			'lp_event_session_id': lpSessionId
 		};
 
-		gtag('event', eventName, eventData);
+		//gtag('event', eventName, eventData);
 
 		appendEventToLog(eventName, eventData);
 	} else {
