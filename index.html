@@ -9,7 +9,6 @@
 	<script>
 		var envMap = {
 			qa : {
-				name: 'qa',
 				tagDomain: 'lptag-dev.dev.lprnd.net',
 				gaSettings: {
 					perfTestGaProperty: 'UA-221193422-11',
@@ -17,7 +16,6 @@
 				}
 			},
 			alpha : {
-				name: 'alpha',
 				tagDomain : 'lptag-a.liveperson.net',
 				gaSettings: {
 					perfTestGaProperty: 'UA-221193422-12',
@@ -25,7 +23,6 @@
 				}
 			},
 			prod : {
-				name: 'production',
 				tagDomain : 'lptag.liveperson.net',
 				gaSettings: {
 					perfTestGaProperty: 'UA-221193422-14',
@@ -55,7 +52,7 @@
 			if(envDetails) {
 				if(!isNaN(minorVersion)) {
 					switch(minorVersion) {
-						case 17: property = envDetails.gaSettings.perfTestGaProperty;
+						case '17': property = envDetails.gaSettings.perfTestGaProperty;
 							break;
 						default: property = envDetails.gaSettings.nonPerfTestGaProperty;
 							break;
