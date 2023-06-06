@@ -1,6 +1,7 @@
 var events = lpTag.events;
 var engagementDisplayStart;
 var engagementDisplayEnd;
+var engagementRecievedFromSharkEnd;
 var messagingWindowLoadStart;
 var messagingWindowLoadEnd;
 var siteId;
@@ -10,6 +11,13 @@ var windowOpenedAlready = false;
 bindToEvents();
 
 function bindToEvents() {
+	events.bind({
+		eventName: "SHOW",
+		appName: "LE_ENGAGER",
+		func: engagementRecievedFromSharkCallback,
+		triggerOnce: true
+	});
+
 	events.bind({
 		eventName: "OFFER_IMPRESSION",
 		appName: "LP_OFFERS",
@@ -29,11 +37,17 @@ function bindToEvents() {
 	});
 }
 
+function engagementRecievedFromSharkCallback() {
+	engagementRecievedFromSharkEnd = new Date();
+	appendEventToLog('engagement_recieved_from_shark', { timestamp: engagementRecievedFromSharkEnd, time_since_page_load: engagementRecievedFromSharkEnd - window.pageLoadStart });
+}
+
 function engagementDisplayedCallback(data) {
 	if(!engagementDisplayedAlready) {
 		engagementDisplayEnd = new Date();
 
 		if(engagementDisplayStart) {
+			appendEventToLog('engagement_displayed', { timestamp: engagementDisplayEnd, time_since_page_load: engagementDisplayEnd - window.pageLoadStart, time_since_engagement_recieved_from_shark: engagementDisplayEnd - engagementRecievedFromSharkEnd });
 			pushToGA('engagement_displayed');
 		}
 		engagementDisplayedAlready = true;
